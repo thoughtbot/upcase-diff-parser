@@ -4,9 +4,6 @@ module Upcase.DiffParser.App
 ) where
 
 import Yesod.Core
-import qualified Data.Text as T
-import Data.Aeson
-import Data.Text (Text)
 import Data.Text.Lazy.Encoding (decodeUtf8)
 import Data.Conduit
 import Data.Conduit.Binary

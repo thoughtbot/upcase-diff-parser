@@ -1,9 +1,8 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Upcase.DiffParser
 ( parseDiff
-, Diff
-, File(..)
-, Line(..)
-, Annotation(..)
+, FileDelta(..)
 ) where
 
 import qualified Data.Text as T
@@ -12,31 +11,34 @@ import qualified Text.Diff.Parse as P
 import Data.Aeson
 import Text.Diff.Parse.Types
 
-type Diff = [File]
-
 data File = File T.Text [Line] deriving (Eq, Show)
 
-instance ToJSON File where
-    toJSON (File name lines) = object
-        [ "name" .= name
-        , "lines" .= map lineToJSON lines
+instance ToJSON FileDelta where
+    toJSON (FileDelta status source dest hunks) = object
+        [ "status" .= show status
+        , "sourceFile" .= source
+        , "destinationFile" .= dest
+        , "hunks" .= hunks
         ]
 
-      where
-        lineToJSON :: Line -> Value
-        lineToJSON (Line annotation content) = object
-            [ "annotation" .= (show annotation)
-            , "content" .= content
-            ]
+instance ToJSON Hunk where
+    toJSON (Hunk source dest lines) = object
+        [ "sourceRange" .= source
+        , "destinationRange" .= dest
+        , "lines" .= lines
+        ]
 
+instance ToJSON Range where
+    toJSON (Range start count) = object
+        [ "start" .= start
+        , "count" .= count
+        ]
 
-parseDiff :: LT.Text -> Either String Diff
-parseDiff = fmap (map toFile) . P.parseDiff . LT.toStrict
+instance ToJSON Line where
+    toJSON (Line ann content) = object
+        [ "annotation" .= show ann
+        , "content" .= content
+        ]
 
-toFile :: FileDelta -> File
-toFile (FileDelta _ _ name hunks) =
-    File name $ filter notRemovedLine $ concatMap hunkLines hunks
-
-  where
-    notRemovedLine :: Line -> Bool
-    notRemovedLine = (/= Removed) . lineAnnotation
+parseDiff :: LT.Text -> Either String FileDeltas
+parseDiff = P.parseDiff . LT.toStrict
