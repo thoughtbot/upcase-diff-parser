@@ -21,10 +21,10 @@ instance ToJSON FileDelta where
         ]
 
 instance ToJSON Hunk where
-    toJSON (Hunk source dest lines) = object
+    toJSON (Hunk source dest ls) = object
         [ "sourceRange" .= source
         , "destinationRange" .= dest
-        , "lines" .= lines
+        , "lines" .= ls
         ]
 
 instance ToJSON Range where
