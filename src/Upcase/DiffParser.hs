@@ -1,9 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-
 module Upcase.DiffParser
-( parseDiff
-, FileDelta(..)
-) where
+    ( parseDiff
+    , FileDelta(..)
+    ) where
 
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as LT

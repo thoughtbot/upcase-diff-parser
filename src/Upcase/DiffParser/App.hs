@@ -1,7 +1,7 @@
 module Upcase.DiffParser.App
-( waiApp
-, parseDiff
-) where
+    ( waiApp
+    , parseDiff
+    ) where
 
 import Yesod.Core
 import Data.Text.Lazy.Encoding (decodeUtf8)
