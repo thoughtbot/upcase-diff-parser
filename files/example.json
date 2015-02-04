@@ -1,0 +1,412 @@
+[
+    {
+        "destFile": "src/Upcase/DiffParser.hs",
+        "hunks": [
+            {
+                "destRange": {
+                    "numberOfLines": 13,
+                    "startingLineNumber": 1
+                },
+                "lines": [
+                    {
+                        "annotation": "Removed",
+                        "content": "{-# OPTIONS_GHC -fno-warn-orphans #-}"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "module Upcase.DiffParser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "    ( parseDiff"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "    , FileDelta(..)"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "    , module Text.Diff.Parse.Types"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "    ) where"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "import qualified Data.Text as T"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "import qualified Data.Text.Lazy as LT"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "import qualified Text.Diff.Parse as P"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "import Data.Aeson"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "import Text.Diff.Parse.Types"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "import Text.Diff.Parse.Instances ()"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "data File = File T.Text [Line] deriving (Eq, Show)"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "instance ToJSON FileDelta where"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "    toJSON (FileDelta status source dest hunks) = object"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        [ \"status\" .= show status"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"sourceFile\" .= source"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"destinationFile\" .= dest"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"hunks\" .= hunks"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        ]"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "instance ToJSON Hunk where"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "    toJSON (Hunk source dest lines) = object"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        [ \"sourceRange\" .= source"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"destinationRange\" .= dest"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"lines\" .= lines"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        ]"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "instance ToJSON Range where"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "    toJSON (Range start count) = object"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        [ \"start\" .= start"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"count\" .= count"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        ]"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "instance ToJSON Line where"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "    toJSON (Line ann content) = object"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        [ \"annotation\" .= show ann"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        , \"content\" .= content"
+                    },
+                    {
+                        "annotation": "Removed",
+                        "content": "        ]"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "import qualified Data.Text.Lazy as LT"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "import qualified Text.Diff.Parse as P"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "parseDiff :: LT.Text -> Either String FileDeltas"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "parseDiff = P.parseDiff . LT.toStrict"
+                    }
+                ],
+                "sourceRange": {
+                    "numberOfLines": 43,
+                    "startingLineNumber": 1
+                }
+            }
+        ],
+        "sourceFile": "src/Upcase/DiffParser.hs",
+        "status": "Modified"
+    },
+    {
+        "destFile": "upcase-diff-parser.cabal",
+        "hunks": [
+            {
+                "destRange": {
+                    "numberOfLines": 46,
+                    "startingLineNumber": 1
+                },
+                "lines": [
+                    {
+                        "annotation": "Context",
+                        "content": "name:                   upcase-diff-parser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "version:                0.0.0"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "author:                 Joe Ferris <jferris@thoughtbot.com>"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "maintainer:             Joe Ferris <jferris@thoughtbot.com>"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "cabal-version:          >= 1.10"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "build-type:             Simple"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "library"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  default-language:     Haskell2010"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  hs-source-dirs:       src"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  ghc-options:          -Wall"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  exposed-modules:      Upcase.DiffParser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , Upcase.DiffParser.App"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "  other-modules:        Data.Aeson.TH.Util"
+                    },
+                    {
+                        "annotation": "Added",
+                        "content": "                      , Text.Diff.Parse.Instances"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  build-depends:        base >= 4 && < 5"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , diff-parse"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , aeson >= 0.8 && < 0.9"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , yesod-core >= 1.4 && < 1.5"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , text > 0.10 && < 1.3"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , conduit"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , conduit-extra"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  extensions:           QuasiQuotes"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                        TypeFamilies"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                        TemplateHaskell"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                        MultiParamTypeClasses"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                        OverloadedStrings"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "executable upcase-diff-parser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  default-language:     Haskell2010"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  main-is:              main.hs"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  ghc-options:          -Wall"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  build-depends:        base"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , upcase-diff-parser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , warp >= 3.0 && < 3.1"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": ""
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "test-suite spec"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  type:                 exitcode-stdio-1.0"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  default-language:     Haskell2010"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  hs-source-dirs:       test"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  ghc-options:          -Wall"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  main-is:              Spec.hs"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "  build-depends:        base"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , upcase-diff-parser"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , hspec"
+                    },
+                    {
+                        "annotation": "Context",
+                        "content": "                      , text"
+                    }
+                ],
+                "sourceRange": {
+                    "numberOfLines": 44,
+                    "startingLineNumber": 1
+                }
+            }
+        ],
+        "sourceFile": "upcase-diff-parser.cabal",
+        "status": "Modified"
+    }
+]
