@@ -4,12 +4,12 @@ module Text.Diff.Parse.Instances
     ) where
 
 import Data.Aeson.TH
-import Data.Aeson.TH.Util
+import Data.Aeson.TH.Options
 import Text.Diff.Parse.Types
 
-$(deriveToJSON (modify $ lowercase . drop 10) ''Annotation)
-$(deriveToJSON (modify $ lowercase . drop 9 ) ''FileDelta)
-$(deriveToJSON (modify $ lowercase . drop 10) ''FileStatus)
-$(deriveToJSON (modify $ lowercase . drop 4 ) ''Hunk)
-$(deriveToJSON (modify $ lowercase . drop 4 ) ''Line)
-$(deriveToJSON (modify $ lowercase . drop 5 ) ''Range)
+$(deriveToJSON (modify $ lowercase . dropPrefix "annotation") ''Annotation)
+$(deriveToJSON (modify $ lowercase . dropPrefix "fileDelta") ''FileDelta)
+$(deriveToJSON (modify $ lowercase . dropPrefix "fileStatus") ''FileStatus)
+$(deriveToJSON (modify $ lowercase . dropPrefix "hunk") ''Hunk)
+$(deriveToJSON (modify $ lowercase . dropPrefix "line") ''Line)
+$(deriveToJSON (modify $ lowercase . dropPrefix "range") ''Range)
