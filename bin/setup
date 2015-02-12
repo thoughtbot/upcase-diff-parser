@@ -1,6 +1,39 @@
 #!/bin/sh
 set -e
 
-[ ! -d .cabal-sandbox ] && cabal sandbox init
+get_env() {
+  local var
 
-cabal install --dependencies-only --enable-tests
+  for var in \
+    HALCYON_AWS_ACCESS_KEY_ID \
+    HALCYON_AWS_SECRET_ACCESS_KEY \
+    HALCYON_S3_BUCKET; do
+
+    printf 'export %s=' "$var"
+    heroku config:get "$var" --app upcase-diff-parser-staging || echo
+  done
+}
+
+if ! command -v heroku >/dev/null; then
+  echo "The \`heroku' command is required to run this setup." >&2
+  echo "https://toolbelt.heroku.com/" >&2
+  exit 1
+fi
+
+if [ ! -w /app ]; then
+  echo 'Using sudo to create a user-writable /app directory for building'
+  sudo mkdir -p /app
+  sudo chown $USER /app
+fi
+
+heroku join --app upcase-diff-parser-staging || true
+heroku join --app upcase-diff-parser-production || true
+
+if [ ! -f ./.env ]; then
+  echo 'Creating ./.env...'
+  get_env > ./.env
+fi
+
+./bin/halcyon-build
+
+echo "Setup complete"
