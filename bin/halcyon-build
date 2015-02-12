@@ -27,8 +27,12 @@ EOF
   exit 1
 fi
 
+if [ ! -w /app ]; then
+  sudo mkdir -p /app
+  sudo chown $USER /app
+fi
+
 if [ ! -d /app/halcyon ]; then
-  echo 'Installing halcyon...'
   git clone https://github.com/mietek/halcyon.git /app/halcyon
 fi
 
