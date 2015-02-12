@@ -1,0 +1,8 @@
+dependencies:
+  override:
+    - ./bin/halcyon-build
+    - /app/halcyon/halcyon paths > halcyon-env
+
+test:
+  override:
+    - source halcyon-env && cabal test
