@@ -8,6 +8,7 @@ import Data.Aeson.TH.Options
 import Text.Diff.Parse.Types
 
 $(deriveToJSON (modify $ lowercase . dropPrefix "annotation") ''Annotation)
+$(deriveToJSON (modify $ lowercase . dropPrefix "content") ''Content)
 $(deriveToJSON (modify $ lowercase . dropPrefix "fileDelta") ''FileDelta)
 $(deriveToJSON (modify $ lowercase . dropPrefix "fileStatus") ''FileStatus)
 $(deriveToJSON (modify $ lowercase . dropPrefix "hunk") ''Hunk)
