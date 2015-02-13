@@ -7,6 +7,7 @@ import Yesod.Core
 import Data.Text.Lazy.Encoding (decodeUtf8)
 import Data.Conduit
 import Data.Conduit.Binary
+import Network.HTTP.Types.Status (badRequest400)
 
 import Upcase.DiffParser (parseDiff)
 
@@ -19,10 +20,10 @@ mkYesod "App" [parseRoutes| / R POST |]
 postR :: Handler Value
 postR = do
     body <- rawRequestBody $$ sinkLbs
-    let diff = parseDiff $ decodeUtf8 body
-    return $ case diff of
-        Left e -> object [ "error" .= e ]
-        Right v -> toJSON v
+    either respondError (return . toJSON) $ parseDiff $ decodeUtf8 body
+
+respondError :: MonadHandler m => String -> m Value
+respondError e = sendResponseStatus badRequest400 $ object [ "error" .= e ]
 
 waiApp :: IO Application
 waiApp = toWaiApp App
