@@ -12,4 +12,4 @@ deployment:
     branch: master
     commands:
       - git remote add staging git@heroku.com:upcase-diff-parser-staging.git
-      - ./bin/deploy staging
+      - ./bin/deploy upcase-diff-parser-staging
