@@ -6,3 +6,10 @@ dependencies:
 test:
   override:
     - source halcyon-env && cabal test
+
+deployment:
+  staging:
+    branch: master
+    commands:
+      - git remote add staging git@heroku.com:upcase-diff-parser-staging.git
+      - ./bin/deploy staging

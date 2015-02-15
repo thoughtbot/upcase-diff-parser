@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# usage: ./bin/deploy [APP]
+#
+#   APP defaults to upcase-diff-parser-staging
+#
+###
+set -e
+
+case "${1:-upcase-diff-parser-staging}" in
+  upcase-diff-parser-staging) git push staging master ;;
+  upcase-diff-parser-production)
+    heroku plugins:install git://github.com/heroku/heroku-pipeline.git
+    heroku pipeline:promote -a upcase-diff-parser-staging
+    heroku restart --app upcase-diff-parser-production
+    ;;
+  *)
+    sed '/^# \(usage:.*\)/!d; s//\1/' "$0" >&2
+    exit 64
+    ;;
+esac
